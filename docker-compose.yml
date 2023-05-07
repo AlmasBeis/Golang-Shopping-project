@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  book-shop:
+    build: ./
+    command: ./wait-for-postgres.sh db ./main
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=postgres
+  db:
+    restart: always
+    image: postgres:14.5
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
