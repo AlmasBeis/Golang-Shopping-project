@@ -210,3 +210,54 @@ func (c *Controller) deleteItemById(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusNoContent)
 }
+
+func (c *Controller) getItemsByCategory(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "")
+	w.Header().Set("Content-Type", "application/json")
+
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	item, err := c.services.Items.GetByCategoryId(id)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(item)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
+
+func (c *Controller) sortByName(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "")
+	w.Header().Set("Content-Type", "application/json")
+
+	var sortBody sortBody
+	err := json.NewDecoder(r.Body).Decode(&sortBody)
+
+	items, err := c.services.Items.SortByName(sortBody.Sort)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(items)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}

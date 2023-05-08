@@ -36,6 +36,22 @@ func (s *ItemService) GetById(id int) (model.Item, error) {
 	return item, nil
 }
 
+func (s *ItemService) GetByCategoryId(categoryId int) ([]model.Item, error) {
+	items, err := s.repo.GetItemByCategoryId(categoryId)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+func (s *ItemService) SortByName(name string) ([]model.Item, error) {
+	items, err := s.repo.SortByName(name)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 func (s *ItemService) SortByRating(rating string) ([]model.Item, error) {
 
 	// Get the items sorted by rating

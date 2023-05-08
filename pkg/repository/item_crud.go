@@ -41,6 +41,25 @@ func (repo *ItemCrud) GetById(id int) (model.Item, error) {
 	return item, nil
 }
 
+func (repo *ItemCrud) GetItemByCategoryId(categoryId int) ([]model.Item, error) {
+	var items []model.Item
+
+	if err := repo.db.Where("category_id = ?", categoryId).Find(&items).Error; err != nil {
+		return nil, err
+	}
+
+	return items, nil
+}
+
+func (repo *ItemCrud) SortByName(sort string) ([]model.Item, error) {
+	var items []model.Item
+
+	if err := repo.db.Where("UPPER(name) LIKE UPPER(?)", "%"+sort+"%").Find(&items).Error; err != nil {
+		return nil, err
+	}
+
+	return items, nil
+}
 func (repo *ItemCrud) SortByRating(sort string) ([]model.Item, error) {
 	var items []model.Item
 

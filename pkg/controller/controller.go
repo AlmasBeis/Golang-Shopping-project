@@ -86,6 +86,10 @@ func (c *Controller) InitRoutes() *mux.Router {
 	items.HandleFunc("/sort/rating", c.sortByRating).Methods("GET")
 
 	items.HandleFunc("/sort/price", c.sortByPrice).Methods("GET")
+	
+	items.HandleFunc("/categories/{id}", c.getItemsByCategory).Methods("GET")
+
+	items.HandleFunc("/sort/name", c.sortByName).Methods("GET")
 
 	items.HandleFunc("", c.createItem).Methods("POST")
 

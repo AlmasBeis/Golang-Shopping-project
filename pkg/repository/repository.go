@@ -39,6 +39,8 @@ type ItemRepo interface {
 	GetById(id int) (model.Item, error)
 	SortByRating(sort string) ([]model.Item, error)
 	SortByPrice(sort string) ([]model.Item, error)
+	GetItemByCategoryId(categoryId int) ([]model.Item, error)
+	SortByName(sort string) ([]model.Item, error)
 	Update(item model.Item, id int) error
 	SetRating(rating float32, id int) error
 	Delete(id int) error

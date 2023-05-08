@@ -28,6 +28,10 @@ func (s *PurchaseService) Create(purchase model.Purchase) error {
 	}
 
 	if err := s.repo.Create(purchase); err != nil {
+		err1 := s.user.Deposit(purchase.UserID, item.Price)
+		if err1 != nil {
+			return err1
+		}
 		return err
 	}
 	return nil

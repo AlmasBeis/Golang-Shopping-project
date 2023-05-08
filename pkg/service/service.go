@@ -34,6 +34,8 @@ type Items interface {
 	Create(item model.Item) error
 	GetAll() ([]model.Item, error)
 	GetById(id int) (model.Item, error)
+	GetByCategoryId(categoryId int) ([]model.Item, error)
+	SortByName(name string) ([]model.Item, error)
 	SortByRating(rating string) ([]model.Item, error)
 	SortByPrice(price string) ([]model.Item, error)
 	SetRating(rating float32, id int) error
