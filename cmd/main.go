@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	cfg, err := initialization.LoadConfig("../pkg/config")
+	cfg, err := initialization.LoadConfig("./pkg/config")
 	if err != nil {
 		log.Fatal("? Could not load environment variables", err)
 	}
